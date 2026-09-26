@@ -17,26 +17,25 @@ struct CreateListView: View {
         VStack(spacing: 16) {
             ScrollView {
                 VStack(alignment: .leading, spacing: 24) {
-                    fieldSection(title: "Wishlist title") {
+                    fieldSection(title: "Ønskeliste navn") {
                         TextField("Bursdagsønsker🎂", text: $title)
                     }
-
-                    HStack(spacing: 16) {
-                        fieldSection(title: "Occasion") {
-                            Picker("", selection: $occasion) {
-                                ForEach(WishList.Occasion.allCases) { occasion in
-                                    Text(occasion.rawValue).tag(occasion)
-                                }
+                    fieldSection(title: "Anledning") {
+                        Picker("", selection: $occasion) {
+                            ForEach(WishList.Occasion.allCases) { occasion in
+                                Text(occasion.rawValue).tag(occasion)
                             }
-                            .pickerStyle(.menu)
-                            .labelsHidden()
                         }
+                        .pickerStyle(.menu)
+                        .labelsHidden()
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    }
 
-                        fieldSection(title: "Event date") {
-                            DatePicker("", selection: $eventDate, displayedComponents: .date)
-                                .labelsHidden()
-                                .datePickerStyle(.compact)
-                        }
+                    fieldSection(title: "Dato") {
+                        DatePicker("", selection: $eventDate, displayedComponents: .date)
+                            .labelsHidden()
+                            .datePickerStyle(.compact)
+                            .frame(maxWidth: .infinity, alignment: .leading)
                     }
                 }
                 .padding()
@@ -65,8 +64,9 @@ struct CreateListView: View {
     private func fieldSection(title: String, @ViewBuilder content: () -> some View) -> some View {
         VStack(alignment: .leading, spacing: 8) {
             Text(title.uppercased())
-                .font(.caption)
+                .font(.subheadline)
                 .foregroundStyle(.secondary)
+            
 
             content()
                 .padding()

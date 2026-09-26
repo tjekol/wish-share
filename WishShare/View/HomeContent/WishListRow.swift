@@ -20,7 +20,7 @@ struct WishListRow: View {
         }
         .padding()
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background(Color(.white), in: RoundedRectangle(cornerRadius: 20))
+        .background(Color(.secondarySystemGroupedBackground), in: RoundedRectangle(cornerRadius: 20))
     }
 }
 

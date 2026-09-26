@@ -9,12 +9,15 @@ struct FriendsView: View {
     var body: some View {
         NavigationStack {
             ContentUnavailableView(
-                "No Friends Yet",
+                "Ingen venner enda",
                 systemImage: "person.2",
-                description: Text("Add friends to see and share wish lists together.")
+                description: Text("Legg til venner for å dele ønskelister")
             )
-            .navigationTitle("Friends")
+            .navigationTitle("Venner")
         
+        }
+        .toolbar {
+            
         }
     }
 }

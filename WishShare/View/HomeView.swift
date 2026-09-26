@@ -36,7 +36,7 @@ struct HomeView: View {
             }
             .listStyle(.plain)
             .scrollContentBackground(.hidden)
-            .background(Color(.systemGroupedBackground))
+            .background(Color(.secondarySystemBackground))
             .navigationTitle("WishShare")
             .navigationDestination(isPresented: $isPresentingCreateWishList) {
                 CreateListView(controller: controller)

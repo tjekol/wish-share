@@ -32,7 +32,7 @@ struct ProfileView: View {
                     //Label("Privacy", systemImage: "lock")
                 }
             }
-            .navigationTitle("Profile")
+            .navigationTitle("Din profil")
         }
     }
 }

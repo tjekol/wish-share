@@ -12,11 +12,10 @@ struct WishList: Identifiable {
     var eventDate: Date
 
     enum Occasion: String, CaseIterable, Identifiable {
-        case birthday = "Birthday"
-        case christmas = "Christmas"
-        case wedding = "Wedding"
-        case graduation = "Graduation"
-        case other = "Other"
+        case birthday = "Bursdag"
+        case christmas = "Jul"
+        case wedding = "Bryllup"
+        case other = "Annet"
 
         var id: String { rawValue }
     }
