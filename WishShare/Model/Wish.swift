@@ -5,7 +5,7 @@
 
 import Foundation
 
-struct Wish: Identifiable {
+struct Wish: Identifiable, Hashable {
     let id = UUID()
     var name: String
     var description: String
