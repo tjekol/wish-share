@@ -10,6 +10,7 @@ struct WishList: Identifiable {
     var name: String
     var occasion: Occasion
     var eventDate: Date
+    var wishes: [Wish] = []
 
     enum Occasion: String, CaseIterable, Identifiable {
         case birthday = "Bursdag"
