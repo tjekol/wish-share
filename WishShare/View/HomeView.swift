@@ -26,6 +26,14 @@ struct HomeView: View {
                 .listRowBackground(Color.clear)
 
                 Section("Dine ønskelister") {
+                    if controller.wishLists.isEmpty {
+                        ContentUnavailableView(
+                            "Ingen ønskerlister enda",
+                            systemImage: "list",
+                            description: Text("Lag en ønskeliste for å komme i gang!")
+                        )
+                        .background(Color(.secondarySystemGroupedBackground), in: RoundedRectangle(cornerRadius: 20))
+                    }
                     ForEach(controller.wishLists) { wishList in
                         Button {
                             selectedWishList = wishList
@@ -53,10 +61,10 @@ struct HomeView: View {
             .navigationTitle("WishShare")
             .navigationBarTitleDisplayMode(.inline)
             .navigationDestination(isPresented: $isPresentingCreateWishList) {
-                CreateListView(controller: controller)
+                CreateWishListView(controller: controller)
             }
             .navigationDestination(item: $selectedWishList) { wishList in
-                WishListView(wishList: wishList)
+                WishListView(wishList: wishList, controller: controller)
             }
         }
     }

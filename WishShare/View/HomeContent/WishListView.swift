@@ -6,10 +6,30 @@
 import SwiftUI
 
 struct WishListView: View {
-    let wishList: WishList
+    let wishListID: WishList.ID
+    @ObservedObject var controller: WishListController
+    @State private var isPresentingCreateWish = false
+    
+    private var wishList: WishList {
+        controller.wishLists.first(where: { $0.id == wishListID }) ?? WishList(name: "", occasion: .other, eventDate: .now)
+    }
+
+    init(wishList: WishList, controller: WishListController) {
+        self.wishListID = wishList.id
+        self.controller = controller
+    }
 
     var body: some View {
         List {
+            Section {
+                WishListHeader(wishList: wishList) {
+                    isPresentingCreateWish = true
+                }
+            }
+            .listRowInsets(EdgeInsets())
+            .listRowBackground(Color.clear)
+            .listRowSeparator(.hidden)
+
             Section("Ønsker") {
                 if wishList.wishes.isEmpty {
                     ContentUnavailableView(
@@ -17,46 +37,43 @@ struct WishListView: View {
                         systemImage: "gift",
                         description: Text("Legg til et ønske for å komme i gang.")
                     )
+                    .background(Color(.secondarySystemGroupedBackground), in: RoundedRectangle(cornerRadius: 20))
                 } else {
                     ForEach(wishList.wishes) { wish in
-                        VStack(alignment: .leading, spacing: 4) {
-                            Text(wish.name)
-                                .font(.headline)
-                            if !wish.description.isEmpty {
-                                Text(wish.description)
-                                    .font(.subheadline)
-                                    .foregroundStyle(.secondary)
-                            }
-                            Text(wish.price, format: .currency(code: "NOK"))
-                                .font(.subheadline)
-                                .foregroundStyle(Color.accentColor)
+                        Button {
+                        } label: {
+                            WishRow(wish: wish)
                         }
-                        .padding(.vertical, 4)
+                        .buttonStyle(.plain)
+                        .listRowInsets(EdgeInsets(top: 3, leading: 16, bottom: 3, trailing: 16))
+                        .swipeActions(edge: .trailing) {
+                            Button(role: .destructive) {
+                                controller.deleteWish(to: wishListID, wish)
+                            } label: {
+                                Label("Delete", systemImage: "trash")
+                            }
+                        }
                     }
                 }
             }
+            .listRowSeparator(.hidden)
+            .listRowBackground(Color.clear)
+            .fontDesign(.serif)
         }
-        .safeAreaInset(edge: .top) {
-            WishListHeader(wishList: wishList) {
-                // TODO: Add a new wish
-            }
-        }
-        .navigationTitle(wishList.occasion.rawValue + "sliste")
+        .listStyle(.plain)
+        .scrollContentBackground(.hidden)
+        .background(Color(.systemGroupedBackground))
+        .navigationTitle(wishList.occasion.rawValue)
         .navigationBarTitleDisplayMode(.inline)
+        .navigationDestination(isPresented: $isPresentingCreateWish) {
+            CreateWishView(controller: controller, wishListID: wishListID)
+        }
     }
 }
 
 #Preview {
+    let controller = WishListController()
     NavigationStack {
-        WishListView(
-            wishList: WishList(
-                name: "Bursdagsønsker",
-                occasion: .birthday,
-                eventDate: .now,
-                wishes: [
-                    Wish(name: "AirPods Pro", description: "Med aktiv støyreduksjon", price: 2999, link: "https://apple.com"),
-                ]
-            )
-        )
+        WishListView(wishList: controller.wishLists[0], controller: controller)
     }
 }

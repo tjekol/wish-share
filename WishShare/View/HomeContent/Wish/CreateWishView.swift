@@ -1,62 +1,60 @@
 //
-//  CreateWishList.swift
+//  CreateWishView.swift
 //  WishShare
 //
 
 import SwiftUI
 
-struct CreateListView: View {
+struct CreateWishView: View {
     @ObservedObject var controller: WishListController
+    let wishListID: WishList.ID
     @Environment(\.dismiss) private var dismiss
 
-    @State private var title: String = ""
-    @State private var occasion: WishList.Occasion = .birthday
-    @State private var eventDate: Date = .now
-
+    @State private var name: String = ""
+    @State private var description: String = ""
+    @State private var price: Decimal?
+    @State private var link: String = ""
+    
     var body: some View {
         VStack(spacing: 16) {
             ScrollView {
                 VStack(alignment: .leading, spacing: 24) {
-                    fieldSection(title: "Ønskeliste navn") {
-                        TextField("Bursdagsønsker🎂", text: $title)
+                    fieldSection(title: "Link") {
+                        TextField("Lim inn lenke til ønske", text: $link)
                     }
-                    fieldSection(title: "Anledning") {
-                        Picker("", selection: $occasion) {
-                            ForEach(WishList.Occasion.allCases) { occasion in
-                                Text(occasion.rawValue).tag(occasion)
-                            }
-                        }
-                        .pickerStyle(.menu)
-                        .labelsHidden()
-                        .frame(maxWidth: .infinity, alignment: .leading)
+                    
+                    fieldSection(title: "Navn") {
+                        TextField("Navn på ønske", text: $name)
                     }
-
-                    fieldSection(title: "Dato") {
-                        DatePicker("", selection: $eventDate, displayedComponents: .date)
-                            .labelsHidden()
-                            .datePickerStyle(.compact)
-                            .frame(maxWidth: .infinity, alignment: .leading)
+    
+                    fieldSection(title: "Beskrivelse") {
+                        TextField("Legg inn detaljer, f.eks. farge, størrelse...", text: $description)
+                    }
+    
+                    fieldSection(title: "Pris") {
+                        TextField("100", value: $price, format: .number)
+                            .keyboardType(.decimalPad)
                     }
                 }
                 .padding()
             }
 
             Button {
-                controller.addWishList(name: title, occasion: occasion, eventDate: eventDate)
+                controller.addWish(to: wishListID, name: name, description: description, price: price, link: link.isEmpty ? nil : link)
                 dismiss()
             } label: {
-                Text("Create Wishlist")
+                Text("Legg til ønske")
                     .font(.headline)
                     .foregroundStyle(.white)
                     .frame(maxWidth: .infinity)
                     .padding()
                     .background(.tint, in: RoundedRectangle(cornerRadius: 16))
             }
-            .disabled(title.isEmpty)
+            .disabled(name.isEmpty)
             .padding(.horizontal)
             .padding(.bottom)
         }
-        .navigationTitle("New Wishlist")
+        .navigationTitle("Legg til ønske")
         .navigationBarTitleDisplayMode(.inline)
     }
 
@@ -77,7 +75,8 @@ struct CreateListView: View {
 }
 
 #Preview {
+    let controller = WishListController()
     NavigationStack {
-        CreateListView(controller: WishListController())
+        CreateWishView(controller: controller, wishListID: controller.wishLists[0].id)
     }
 }

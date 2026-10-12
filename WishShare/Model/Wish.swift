@@ -9,6 +9,6 @@ struct Wish: Identifiable, Hashable {
     let id = UUID()
     var name: String
     var description: String
-    var price: Decimal
-    var link: String
+    var price: Decimal?
+    var link: String?
 }

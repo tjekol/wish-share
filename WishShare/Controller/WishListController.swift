@@ -34,4 +34,14 @@ final class WishListController: ObservableObject {
     func delete(_ wishList: WishList) {
         wishLists.removeAll { $0.id == wishList.id }
     }
+    
+    func addWish(to wishListID: WishList.ID, name: String, description: String, price: Decimal?, link: String?) {
+        guard let index = wishLists.firstIndex(where: { $0.id == wishListID }) else { return }
+        wishLists[index].wishes.append(Wish(name: name, description: description, price: price, link: link))
+    }
+    
+    func deleteWish(to wishListID: WishList.ID, _ wish: Wish) {
+        guard let index = wishLists.firstIndex(where: { $0.id == wishListID }) else { return }
+        wishLists[index].wishes.removeAll() { $0.id == wish.id }
+    }
 }
