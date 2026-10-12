@@ -30,9 +30,9 @@ final class WishListController: ObservableObject {
     func addWishList(name: String, occasion: WishList.Occasion, eventDate: Date) {
         wishLists.append(WishList(name: name, occasion: occasion, eventDate: eventDate))
     }
-
-    func delete(_ wishList: WishList) {
-        wishLists.removeAll { $0.id == wishList.id }
+    
+    func deleteWishList(to wishListID: WishList.ID) {
+        wishLists.removeAll() { $0.id == wishListID }
     }
     
     func addWish(to wishListID: WishList.ID, name: String, description: String, price: Decimal?, link: String?) {

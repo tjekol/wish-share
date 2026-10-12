@@ -44,7 +44,7 @@ struct HomeView: View {
                         .listRowInsets(EdgeInsets(top: 3, leading: 16, bottom: 3, trailing: 16))
                         .swipeActions(edge: .trailing) {
                             Button(role: .destructive) {
-                                controller.delete(wishList)
+                                controller.deleteWishList(to: wishList.id)
                             } label: {
                                 Label("Delete", systemImage: "trash")
                             }

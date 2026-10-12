@@ -12,7 +12,7 @@ struct CreateWishView: View {
 
     @State private var name: String = ""
     @State private var description: String = ""
-    @State private var price: Decimal?
+    @State private var priceText: String = ""
     @State private var link: String = ""
     
     var body: some View {
@@ -27,20 +27,27 @@ struct CreateWishView: View {
                         TextField("Navn på ønske", text: $name)
                     }
     
-                    fieldSection(title: "Beskrivelse") {
-                        TextField("Legg inn detaljer, f.eks. farge, størrelse...", text: $description)
+                    fieldSection(title: "Notat") {
+                        TextField("Legg inn detaljer, f.eks. farge, størrelse...", text: $description, axis: .vertical)
+                            .lineLimit(3...6)
                     }
     
                     fieldSection(title: "Pris") {
-                        TextField("100", value: $price, format: .number)
+                        TextField("100", text: $priceText)
                             .keyboardType(.decimalPad)
+                            .onChange(of: priceText) { _, newValue in
+                                let filtered = newValue.filter { $0.isNumber || $0 == "," || $0 == "." }
+                                if filtered != newValue {
+                                    priceText = filtered
+                                }
+                            }
                     }
                 }
                 .padding()
             }
 
             Button {
-                controller.addWish(to: wishListID, name: name, description: description, price: price, link: link.isEmpty ? nil : link)
+                controller.addWish(to: wishListID, name: name, description: description, price: Decimal(string: priceText, locale: .current), link: link.isEmpty ? nil : link)
                 dismiss()
             } label: {
                 Text("Legg til ønske")

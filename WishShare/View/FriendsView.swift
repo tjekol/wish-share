@@ -18,6 +18,7 @@ struct FriendsView: View {
                     description: Text("Legg til venner for å dele ønskeliste")
                 )
             }
+            .fontDesign(.serif)
             .navigationTitle("Venner")
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {

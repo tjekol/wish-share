@@ -45,7 +45,7 @@ struct CreateWishListView: View {
                 controller.addWishList(name: title, occasion: occasion, eventDate: eventDate)
                 dismiss()
             } label: {
-                Text("Create Wishlist")
+                Text("Lag ønskeliste")
                     .font(.headline)
                     .foregroundStyle(.white)
                     .frame(maxWidth: .infinity)

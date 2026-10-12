@@ -9,7 +9,9 @@ struct WishListView: View {
     let wishListID: WishList.ID
     @ObservedObject var controller: WishListController
     @State private var isPresentingCreateWish = false
-    
+    @State private var selectedWish: Wish?
+    @Environment(\.dismiss) private var dismiss
+
     private var wishList: WishList {
         controller.wishLists.first(where: { $0.id == wishListID }) ?? WishList(name: "", occasion: .other, eventDate: .now)
     }
@@ -41,6 +43,7 @@ struct WishListView: View {
                 } else {
                     ForEach(wishList.wishes) { wish in
                         Button {
+                            selectedWish = wish
                         } label: {
                             WishRow(wish: wish)
                         }
@@ -67,6 +70,19 @@ struct WishListView: View {
         .navigationBarTitleDisplayMode(.inline)
         .navigationDestination(isPresented: $isPresentingCreateWish) {
             CreateWishView(controller: controller, wishListID: wishListID)
+        }
+        .sheet(item: $selectedWish) { wish in
+            WishView(controller: controller, wishListID: wishListID, wish: wish)
+        }
+        .toolbar {
+            ToolbarItem(placement: .destructiveAction) {
+                Button {
+                    controller.deleteWishList(to: wishListID)
+                    dismiss()
+                } label: {
+                    Label("Slett liste", systemImage: "trash")
+                }
+            }
         }
     }
 }
