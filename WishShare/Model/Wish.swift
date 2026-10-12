@@ -11,4 +11,5 @@ struct Wish: Identifiable, Hashable {
     var description: String
     var price: Decimal?
     var link: String?
+    var isReserved: Bool
 }

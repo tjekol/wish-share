@@ -13,7 +13,7 @@ struct WishListView: View {
     @Environment(\.dismiss) private var dismiss
 
     private var wishList: WishList {
-        controller.wishLists.first(where: { $0.id == wishListID }) ?? WishList(name: "", occasion: .other, eventDate: .now)
+        controller.wishLists.first(where: { $0.id == wishListID }) ?? WishList(name: "", occasion: .other, eventDate: .now, owner: "TJ")
     }
 
     init(wishList: WishList, controller: WishListController) {

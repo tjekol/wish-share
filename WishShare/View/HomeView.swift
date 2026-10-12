@@ -1,5 +1,5 @@
 //
-//  WishListView.swift
+//  HomeView.swift
 //  WishShare
 //
 

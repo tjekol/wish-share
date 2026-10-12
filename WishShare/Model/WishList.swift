@@ -11,6 +11,7 @@ struct WishList: Identifiable, Hashable {
     var occasion: Occasion
     var eventDate: Date
     var wishes: [Wish] = []
+    var owner: String
 
     enum Occasion: String, CaseIterable, Identifiable, Hashable {
         case birthday = "Bursdag"

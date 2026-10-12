@@ -32,6 +32,6 @@ struct WishRow: View {
 }
 
 #Preview {
-    WishRow(wish: Wish(name: "HiLo", description: "Kortspill", price: 275))
+    WishRow(wish: Wish(name: "HiLo", description: "Kortspill", price: 275, isReserved: false))
         .padding()
 }

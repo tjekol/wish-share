@@ -85,7 +85,6 @@ struct WishView: View {
 
 #Preview {
     let controller = WishListController()
-    
     WishView(
         controller: controller,
         wishListID: controller.wishLists[0].id,

@@ -25,6 +25,7 @@ struct WishListRow: View {
 }
 
 #Preview {
-    WishListRow(wishList: WishList(name: "Bursdagsønsker", occasion: .birthday, eventDate: .now))
+    let controller = WishListController()
+    WishListRow(wishList: controller.wishLists[0])
         .padding()
 }
