@@ -16,9 +16,9 @@ struct ProfileView: View {
                             .frame(width: 60, height: 60)
                             .foregroundStyle(.tint)
                         VStack(alignment: .leading) {
-                            Text("Your Name")
+                            Text("Ditt navn")
                                 .font(.headline)
-                            Text("Edit your profile")
+                            Text("Rediger profil")
                                 .font(.subheadline)
                                 .foregroundStyle(.secondary)
                         }
@@ -27,8 +27,8 @@ struct ProfileView: View {
                 }
 
                 Section {
-                    Label("Settings", systemImage: "gear")
-                    Label("Notifications", systemImage: "bell")
+                    Label("Instillinger", systemImage: "gear")
+                    Label("Varslinger", systemImage: "bell")
                     //Label("Privacy", systemImage: "lock")
                 }
             }

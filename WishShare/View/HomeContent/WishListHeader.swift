@@ -16,11 +16,16 @@ struct WishListHeader: View {
                 .fontDesign(.serif)
                 .foregroundStyle(.primary)
 
-            Text(wishList.eventDate.formatted(date: .abbreviated, time: .omitted))
-                .font(.subheadline)
-                .fontDesign(.serif)
-                .foregroundStyle(.secondary)
-
+            HStack {
+                Text(wishList.eventDate.formatted(date: .abbreviated, time: .omitted))
+                    .font(.subheadline)
+                    .fontDesign(.serif)
+                    .foregroundStyle(.secondary)
+                Text(wishList.occasion.rawValue)
+                    .font(.subheadline)
+                    .fontDesign(.serif)
+                    .foregroundStyle(.secondary)
+            }
             HStack(spacing: 12) {
                 ShareLink(item: "Sjekk ut ønskelisten min: \(wishList.name)") {
                     Label("Del liste", systemImage: "square.and.arrow.up")

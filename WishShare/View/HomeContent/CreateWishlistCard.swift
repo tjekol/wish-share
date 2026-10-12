@@ -21,7 +21,7 @@ struct CreateWishlistCard: View {
                 .frame(width: 44, height: 44)
 
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("Lag en ny ønskeliste")
+                    Text("Lag en ønskeliste")
                         .font(.headline)
                         .foregroundStyle(Color.accentColor)
                     Text("Del ønsker med familie og venner!")

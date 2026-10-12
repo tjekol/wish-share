@@ -11,7 +11,7 @@ struct WishListRow: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
             Text(wishList.name)
-                .font(.title2)
+                .font(.title3)
                 .fontDesign(.serif)
 
             Text("\(wishList.occasion.rawValue) • \(wishList.eventDate.formatted(date: .abbreviated, time: .omitted))")
