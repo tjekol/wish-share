@@ -82,7 +82,7 @@ struct CreateWishView: View {
 }
 
 #Preview {
-    let controller = WishListController()
+    let controller = WishListController(demoData: true)
     NavigationStack {
         CreateWishView(controller: controller, wishListID: controller.wishLists[0].id)
     }

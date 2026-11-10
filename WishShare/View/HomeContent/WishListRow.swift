@@ -25,7 +25,7 @@ struct WishListRow: View {
 }
 
 #Preview {
-    let controller = WishListController()
+    let controller = WishListController(demoData: true)
     WishListRow(wishList: controller.wishLists[0])
         .padding()
 }

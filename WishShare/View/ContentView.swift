@@ -25,4 +25,6 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
+        .environmentObject(AuthController())
+        .environmentObject(WishListController(demoData: true))
 }

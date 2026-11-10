@@ -6,7 +6,7 @@
 import SwiftUI
 
 struct HomeView: View {
-    @StateObject private var controller = WishListController()
+    @EnvironmentObject private var controller: WishListController
     @State private var isPresentingCreateWishList = false
     @State private var selectedWishList: WishList?
 
@@ -72,4 +72,5 @@ struct HomeView: View {
 
 #Preview {
     HomeView()
+        .environmentObject(WishListController(demoData: true))
 }

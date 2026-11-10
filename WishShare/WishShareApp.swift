@@ -9,9 +9,14 @@ import SwiftUI
 
 @main
 struct WishShareApp: App {
+    @StateObject private var authController = AuthController()
+    @StateObject private var wishListController = WishListController()
+
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            RootView()
         }
+        .environmentObject(authController)
+        .environmentObject(wishListController)
     }
 }

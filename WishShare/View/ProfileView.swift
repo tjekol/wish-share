@@ -6,6 +6,9 @@
 import SwiftUI
 
 struct ProfileView: View {
+    @EnvironmentObject private var authController: AuthController
+    @EnvironmentObject private var wishListController: WishListController
+
     var body: some View {
         NavigationStack {
             List {
@@ -16,11 +19,13 @@ struct ProfileView: View {
                             .frame(width: 60, height: 60)
                             .foregroundStyle(.tint)
                         VStack(alignment: .leading) {
-                            Text("Ditt navn")
+                            Text(authController.currentUser?.name ?? "Ikke innlogget")
                                 .font(.headline)
-                            Text("Rediger profil")
-                                .font(.subheadline)
-                                .foregroundStyle(.secondary)
+                            if let username = authController.currentUser?.username {
+                                Text("@\(username)")
+                                    .font(.subheadline)
+                                    .foregroundStyle(.secondary)
+                            }
                         }
                     }
                     .padding(.vertical, 8)
@@ -31,6 +36,17 @@ struct ProfileView: View {
                     Label("Varslinger", systemImage: "bell")
                     //Label("Privacy", systemImage: "lock")
                 }
+
+                Section {
+                    Button {
+                        wishListController.clearData()
+                        authController.logOut()
+                    } label: {
+                        Text("Logg ut")
+                            .foregroundStyle(.red)
+                            .frame(maxWidth: .infinity)
+                    }
+                }
             }
             .navigationTitle("Din profil")
         }
@@ -39,4 +55,6 @@ struct ProfileView: View {
 
 #Preview {
     ProfileView()
+        .environmentObject(AuthController())
+        .environmentObject(WishListController(demoData: true))
 }

@@ -88,7 +88,7 @@ struct WishListView: View {
 }
 
 #Preview {
-    let controller = WishListController()
+    let controller = WishListController(demoData: true)
     NavigationStack {
         WishListView(wishList: controller.wishLists[0], controller: controller)
     }

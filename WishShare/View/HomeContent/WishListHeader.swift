@@ -55,7 +55,7 @@ struct WishListHeader: View {
 }
 
 #Preview {
-    let controller = WishListController()
+    let controller = WishListController(demoData: true)
     WishListHeader(
         wishList: controller.wishLists[0],
         onAddWish: {}
