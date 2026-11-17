@@ -13,7 +13,7 @@ struct WishListView: View {
     @Environment(\.dismiss) private var dismiss
 
     private var wishList: WishList {
-        controller.wishLists.first(where: { $0.id == wishListID }) ?? WishList(name: "", occasion: .other, eventDate: .now, owner: "TJ")
+        controller.wishLists.first(where: { $0.id == wishListID }) ?? WishList(name: "", occasion: .other, eventDate: .now, ownerID: User.test.id)
     }
 
     init(wishList: WishList, controller: WishListController) {
@@ -51,7 +51,7 @@ struct WishListView: View {
                         .listRowInsets(EdgeInsets(top: 3, leading: 16, bottom: 3, trailing: 16))
                         .swipeActions(edge: .trailing) {
                             Button(role: .destructive) {
-                                controller.deleteWish(to: wishListID, wish)
+                                Task { await controller.deleteWish(to: wishListID, wish) }
                             } label: {
                                 Label("Delete", systemImage: "trash")
                             }
@@ -66,7 +66,7 @@ struct WishListView: View {
         .listStyle(.plain)
         .scrollContentBackground(.hidden)
         .background(Color(.systemGroupedBackground))
-        .navigationTitle(wishList.occasion.rawValue)
+        .navigationTitle(wishList.occasion.displayName)
         .navigationBarTitleDisplayMode(.inline)
         .navigationDestination(isPresented: $isPresentingCreateWish) {
             CreateWishView(controller: controller, wishListID: wishListID)
@@ -77,7 +77,7 @@ struct WishListView: View {
         .toolbar {
             ToolbarItem(placement: .destructiveAction) {
                 Button {
-                    controller.deleteWishList(to: wishListID)
+                    Task { await controller.deleteWishList(to: wishListID) }
                     dismiss()
                 } label: {
                     Label("Slett liste", systemImage: "trash")

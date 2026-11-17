@@ -14,7 +14,7 @@ struct WishListRow: View {
                 .font(.title3)
                 .fontDesign(.serif)
 
-            Text("\(wishList.occasion.rawValue) • \(wishList.eventDate.formatted(date: .abbreviated, time: .omitted))")
+            Text("\(wishList.occasion.displayName) • \(wishList.eventDate.formatted(date: .abbreviated, time: .omitted))")
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
         }

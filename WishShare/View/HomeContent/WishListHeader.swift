@@ -21,7 +21,7 @@ struct WishListHeader: View {
                     .font(.subheadline)
                     .fontDesign(.serif)
                     .foregroundStyle(.secondary)
-                Text(wishList.occasion.rawValue)
+                Text(wishList.occasion.displayName)
                     .font(.subheadline)
                     .fontDesign(.serif)
                     .foregroundStyle(.secondary)

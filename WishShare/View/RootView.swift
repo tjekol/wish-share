@@ -9,10 +9,15 @@ struct RootView: View {
     @EnvironmentObject private var authController: AuthController
 
     var body: some View {
-        if authController.isLoggedIn {
-            ContentView()
-        } else {
-            LoginView()
+        Group {
+            if authController.isLoggedIn {
+                ContentView()
+            } else {
+                LoginView()
+            }
+        }
+        .task {
+            await authController.restoreSession()
         }
     }
 }

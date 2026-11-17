@@ -72,7 +72,7 @@ struct WishView: View {
                 }
                 ToolbarItem(placement: .destructiveAction) {
                     Button(role: .destructive) {
-                        controller.deleteWish(to: wishListID, wish)
+                        Task { await controller.deleteWish(to: wishListID, wish) }
                         dismiss()
                     } label: {
                         Label("Slett ønske", systemImage: "trash")

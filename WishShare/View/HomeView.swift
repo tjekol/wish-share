@@ -44,7 +44,7 @@ struct HomeView: View {
                         .listRowInsets(EdgeInsets(top: 3, leading: 16, bottom: 3, trailing: 16))
                         .swipeActions(edge: .trailing) {
                             Button(role: .destructive) {
-                                controller.deleteWishList(to: wishList.id)
+                                Task { await controller.deleteWishList(to: wishList.id) }
                             } label: {
                                 Label("Delete", systemImage: "trash")
                             }
@@ -60,6 +60,21 @@ struct HomeView: View {
             .background(Color(.systemGroupedBackground))
             .navigationTitle("WishShare")
             .navigationBarTitleDisplayMode(.inline)
+            .task {
+                await controller.fetchWishLists()
+            }
+            .alert(
+                "Noe gikk galt",
+                isPresented: Binding(
+                    get: { controller.errorMessage != nil },
+                    set: { if !$0 { controller.errorMessage = nil } }
+                ),
+                presenting: controller.errorMessage
+            ) { _ in
+                Button("OK", role: .cancel) {}
+            } message: { message in
+                Text(message)
+            }
             .navigationDestination(isPresented: $isPresentingCreateWishList) {
                 CreateWishListView(controller: controller)
             }

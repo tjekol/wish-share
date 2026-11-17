@@ -7,6 +7,7 @@ import SwiftUI
 
 struct CreateWishListView: View {
     @ObservedObject var controller: WishListController
+    @EnvironmentObject private var authController: AuthController
     @Environment(\.dismiss) private var dismiss
 
     @State private var title: String = ""
@@ -23,7 +24,7 @@ struct CreateWishListView: View {
                     fieldSection(title: "Anledning") {
                         Picker("", selection: $occasion) {
                             ForEach(WishList.Occasion.allCases) { occasion in
-                                Text(occasion.rawValue).tag(occasion)
+                                Text(occasion.displayName).tag(occasion)
                             }
                         }
                         .pickerStyle(.menu)
@@ -42,7 +43,7 @@ struct CreateWishListView: View {
             }
 
             Button {
-                controller.addWishList(name: title, occasion: occasion, eventDate: eventDate)
+                Task { await controller.addWishList(name: title, occasion: occasion, eventDate: eventDate, ownerID: authController.currentUserID) }
                 dismiss()
             } label: {
                 Text("Lag ønskeliste")

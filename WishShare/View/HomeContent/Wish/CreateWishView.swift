@@ -47,7 +47,9 @@ struct CreateWishView: View {
             }
 
             Button {
-                controller.addWish(to: wishListID, name: name, description: description, price: Decimal(string: priceText, locale: .current), link: link.isEmpty ? nil : link)
+                Task {
+                    await controller.addWish(to: wishListID, name: name, description: description, price: Decimal(string: priceText, locale: .current), link: link.isEmpty ? nil : link)
+                }
                 dismiss()
             } label: {
                 Text("Legg til ønske")

@@ -39,8 +39,10 @@ struct ProfileView: View {
 
                 Section {
                     Button {
-                        wishListController.clearData()
-                        authController.logOut()
+                        Task {
+                            wishListController.clearData()
+                            await authController.logOut()
+                        }
                     } label: {
                         Text("Logg ut")
                             .foregroundStyle(.red)
